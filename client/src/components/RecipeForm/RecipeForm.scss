@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,600,700|Work+Sans:100,200,300,400,500,600');
+
+:root {
+    --headlinesFont: 'Josefin Sans', sans-serif;
+    --bodyFont: 'Work Sans', sans-serif;
+    --wildWatermelon: #ff4f87;
+    --fuelYellow: #f0a035;
+    --textColor: #323232;
+    --bodyBg: #d6d6d6;
+    --white: #fff;
+    --black: #000;
+}
+
+@mixin poCentering {
+    top: 50%;
+    right: 50%;
+    bottom: 50%;
+    left: 50%;
+    position: absolute;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+* {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+body {
+    background: var(--bodyBg);
+    font-family: var(--bodyFont);
+    color: var(--textColor);
+    line-height: 1.5;
+}
+
+.recipe {
+    box-sizing: border-box;
+    // height: 654px;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 88px 0 rgba(0, 0, 0, 0.1607843137254902);
+    // overflow: hidden;
+}
+
+.title-hr {
+    width: 60%;
+    border-top: 1px dashed gray;
+}
+
+.recipe-thumb {
+    position: relative;
+    height: 281px;
+    box-shadow: 0px 0px 130px 0 rgba(0, 0, 0, 0.38);
+}
+
+.recipe-details {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 1.4em 0 1em;
+    margin: 0;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.recipe li {
+    flex: 1;
+    display: grid;
+    grid-template-rows: 60px 80px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.icon {
+    font-size: 50px;  
+    grid-row: 1 / 2;
+    margin-bottom: -200px;
+}
+
+.value {
+    // color: darkblue;
+    margin-left: .35em;
+    vertical-align: bottom;
+    font-family: var(--headlinesFont);
+    font: {
+        size: 24px;
+        weight: 600;
+    }
+    grid-row: 2 / 3
+}
+
+.recipe img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    vertical-align: text-bottom;
+}
+
+.recipe-title-wrapper {
+    display: flex;
+    padding: .35em 0 .3em;
+    margin-bottom: -60px;
+    // border-bottom: 1px solid #d8d8d8;
+    justify-content: center;
+}
+
+.recipe-title {
+    font-family: var(--headlinesFont);
+    margin-top: 0px;
+    font-weight: 600;
+    font: {
+        size: 60px
+    }
+}
+
+.recipe-description {
+    margin: .3em 0 1.8em;
+}
+
+.recipe-details-row1 {
+    display: flex;
+}
+
+.cook-time-wrapper {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.cook-time-wrapper .value {
+    grid-row: 1 / 2;
+}
+
+.difficulty-wrapper {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.difficulty-wrapper .value {
+    grid-row: 1 / 2;
+}
+
+.recipe-minutes-title, .recipe-difficulty-title {
+    color: black;
+    margin-top: -10px;
+    margin-left: .35em;
+    vertical-align: bottom;
+    font-family: var(--headlinesFont);
+    font: {
+        size: 24px;
+        weight: 600;
+    }
+    grid-row: 2 / 3;
+}
+
+.large-input-wrapper > .value {
+    display: grid;
+    grid-template-rows: 1fr 3fr
+}
+
+.large-input-wrapper > .value:first-child {
+    grid-row: 1 / 2;
+}
+
+.large-input-wrapper > .value:nth-child(2) {
+    grid-row: 2 / 3;
+}
+
+#recipe-title-form, #recipe-img-value {
+    display: grid;
+    grid-template-rows: 3fr 1fr
+}
+
+#recipe-title-form:nth-child(1), #recipe-img-value:nth-child(1) {
+    grid-row: 1 / 2;
+}
+
+#recipe-title-form:nth-child(2), #recipe-img-value:nth-child(2) {
+    grid-row: 2 / 3;
+}
+
+#recipe-img-value:nth-child(2) {
+    width: 40%;
+}
+
+#recipe-submit-button {
+	box-shadow: 0px 10px 14px -7px #000000;
+	background:linear-gradient(to bottom, #040b0d 5%, #5c696b 100%);
+	background-color:#040b0d;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	padding:13px 32px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #0f0f0f;
+}
+
+#recipe-submit-button:hover {
+	background:linear-gradient(to bottom, #5c696b 5%, #040b0d 100%);
+	background-color:#5c696b;
+}
+
+#recipe-submit-button:active {
+	position:relative;
+	top:1px;
+}
+
+textarea {
+    resize: none;
+    height: 80px
+}

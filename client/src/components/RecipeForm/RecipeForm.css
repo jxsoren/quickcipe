@@ -1,0 +1,12 @@
+.recipe-form-parent {
+    border-style: 1px solid black
+}
+
+#recipe-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe-title {
+    
+}

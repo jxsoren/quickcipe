@@ -1,0 +1,15 @@
+.profile {
+    text-align: center;
+}
+
+.profile-user-recipes {
+    text-align: center;
+}
+
+.no-recipes {
+    padding-bottom: 200px;
+}
+
+.my-recipes-title {
+    text-decoration: underline;
+}

@@ -1,0 +1,14 @@
+.home {
+    text-align: center;
+}
+
+.pubRes-title {
+    font-size: 2.5em;
+    font-family: fantasy;
+    text-decoration: underline;
+}
+
+.logo {
+    height: 350px;
+    width: 350px
+}
