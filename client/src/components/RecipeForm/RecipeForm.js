@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { RecipeContext } from '../../context/RecipeProvider.js'
 import './RecipeForm.css'
 import './RecipeForm.scss'
 
 import { Icon } from '@iconify/react';
+
 import warningAlt from '@iconify-icons/carbon/warning-alt';
 import baselineDescription from '@iconify-icons/ic/baseline-description';
 import utensilsAlt from '@iconify-icons/uil/utensils-alt';
@@ -13,8 +14,71 @@ import listSolid from '@iconify-icons/clarity/list-solid';
 import alarmIcon from '@iconify-icons/bi/alarm';
 
 export const RecipeForm = ( props ) => {
-    const { title, description, difficulty, ingredients, totalCookTime, equipment, imgURL, servingSize, stepOne, stepTwo, stepThree, handleChange, handleStepChange, handleSubmit } = useContext(RecipeContext)
-    const { editToggle } = props
+    const { addRecipe, editRecipe } = useContext(RecipeContext)
+    const { editToggle, setEditToggle, _id } = props
+    const { title, description, difficulty, ingredients, totalCookTime,
+    equipment, servingSize, steps, imgURL } = props
+
+    const initInputs = {
+        title: title || '',
+        description: description || '',
+        difficulty: difficulty || 0,
+        ingredients: ingredients || '',
+        totalCookTime: totalCookTime ||  0,
+        equipment: title || '',
+        servingSize: servingSize ||  0,
+        steps: steps || [],
+        imgURL: imgURL ||  ''
+    }
+
+    const initStepInputs = {
+        stepOne: '',
+        stepTwo: '',
+        stepThree: ''
+    }
+
+    const [ recipeInputs, setRecipeInputs ] = useState(initInputs)
+    const [ stepInputs, setStepInputs ] = useState(initStepInputs)
+
+    const { stepOne, stepTwo, stepThree } = stepInputs 
+
+    const handleSubmit = ( e ) => {
+        const { stepOne, stepTwo, stepThree } = stepInputs
+        e.preventDefault()
+
+        recipeInputs.steps.push(stepOne, stepTwo, stepThree)
+
+        // setRecipeInputs((prev, stepInputs) => ({
+        //     ...prev,
+        //     steps: [stepInputs]
+        // }))
+
+        addRecipe(recipeInputs)
+        setRecipeInputs(initInputs)
+        setStepInputs(initStepInputs)
+    }
+
+    const handleEditSubmit = e => {
+        e.preventDefault()
+        editRecipe(recipeInputs, _id)
+        setEditToggle(prevTog => !prevTog)
+    }
+
+    const handleChange = ( e ) => {
+        const { name, value } = e.target
+        setRecipeInputs(prev => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
+    const handleStepChange = ( e ) => {
+        const { name, value } = e.target
+        setStepInputs(prev => ({
+            ...prev,
+            [name]: value
+        }))
+    }
 
     return(
         <div className="recipe-form-parent">
@@ -217,7 +281,7 @@ export const RecipeForm = ( props ) => {
                                         name="imgURL"
                                         placeholder="Recipe Image Url"
                                         onChange={handleChange}
-                                        value={imgURL}
+                                        // value={imgURL}
                                     />
                                 </span>
                             </div>
@@ -230,7 +294,7 @@ export const RecipeForm = ( props ) => {
                                         name="title"
                                         placeholder="Recipe Name"
                                         onChange={handleChange}
-                                        value={title}
+                                        // value={title}
                                         required
                                     />
                                 </h2>
@@ -253,7 +317,7 @@ export const RecipeForm = ( props ) => {
                                                     name="totalCookTime"
                                                     placeholder="Recipe Cook Time"
                                                     onChange={handleChange}
-                                                    value={totalCookTime}
+                                                    // value={totalCookTime}
                                                     required
                                                     />
                                             </span>
@@ -274,7 +338,7 @@ export const RecipeForm = ( props ) => {
                                                 name="servingSize"
                                                 placeholder="Recipe Serving Size"
                                                 onChange={handleChange}
-                                                value={servingSize}
+                                                // value={servingSize}
                                                 required
                                                 />
                                         </span>
@@ -292,7 +356,7 @@ export const RecipeForm = ( props ) => {
                                                     name="difficulty"
                                                     placeholder="Recipe Difficulty"
                                                     onChange={handleChange}
-                                                    value={difficulty}
+                                                    // value={difficulty}
                                                     required
                                                     />
                                                 /10
@@ -311,7 +375,7 @@ export const RecipeForm = ( props ) => {
                                             name="description"
                                             form="recipe-form"
                                             onChange={handleChange}
-                                            value={description}
+                                            // value={description}
                                             placeholder="Recipe Description"
                                             required
                                         />
@@ -329,7 +393,7 @@ export const RecipeForm = ( props ) => {
                                             name="ingredients"
                                             placeholder="Recipe Ingredients"
                                             onChange={handleChange}
-                                            value={ingredients}
+                                            // value={ingredients}
                                             required
                                             />
                                     </span>
@@ -346,7 +410,7 @@ export const RecipeForm = ( props ) => {
                                                 name="equipment"
                                                 placeholder="Recipe Equipment"
                                                 onChange={handleChange}
-                                                value={equipment}
+                                                // value={equipment}
                                                 required
                                                 />
                                         </span>
@@ -363,7 +427,7 @@ export const RecipeForm = ( props ) => {
                                             name="stepOne"
                                             placeholder="Recipe Step #1"
                                             onChange={handleStepChange}
-                                            value={stepOne}
+                                            // value={stepOne}
                                             required
                                             />
                                         <input 
@@ -371,7 +435,7 @@ export const RecipeForm = ( props ) => {
                                             name="stepTwo"
                                             placeholder="Recipe Step #2"
                                             onChange={handleStepChange}
-                                            value={stepTwo}
+                                            // value={stepTwo}
                                             required
                                             />
                                         <input 
@@ -379,13 +443,29 @@ export const RecipeForm = ( props ) => {
                                             name='stepThree'
                                             placeholder="Recipe Step #3"
                                             onChange={handleStepChange}
-                                            value={stepThree}
+                                            // value={stepThree}
                                             required
                                             />
                                     </span> 
                                 </li>
                             </ul>
                         </div>
+
+                        <div className="button">
+                            <button
+                                className="editButton"
+                                onClick={handleEditSubmit}
+                            >
+                            Submit Edit</button>
+
+                            <button
+                                className="closeButton"
+                                onClick={() => setEditToggle(prev => !prev)}
+                            >
+                                Close 
+                            </button>
+                        </div>  
+
                     </form>
                 </>
             }

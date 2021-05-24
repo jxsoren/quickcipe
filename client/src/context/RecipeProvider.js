@@ -11,44 +11,8 @@ userAxios.interceptors.request.use(config => {
 })
 
 export default function RecipeProvider(props){
-    const initInputs = {
-        title: '',
-        description: '',
-        difficulty: 0,
-        ingredients: '',
-        totalCookTime: 0,
-        equipment: '',
-        servingSize: 0,
-        steps: [],
-        imgURL: ''
-    }
-
-    const initStepInputs = {
-        stepOne: '',
-        stepTwo: '',
-        stepThree: ''
-    }
-
-    const [ recipeInputs, setRecipeInputs ] = useState(initInputs)
-    const [ stepInputs, setStepInputs ] = useState(initStepInputs)
     const [ userRecipes, setUserRecipes ] = useState({ userRecipes: []})
     const [ recipes, setRecipes ] = useState({ recipes: [] })
-
-    const handleChange = ( e ) => {
-        const { name, value } = e.target
-        setRecipeInputs(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    }
-
-    const handleStepChange = ( e ) => {
-        const { name, value } = e.target
-        setStepInputs(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    }
 
     const getUserRecipes = () => {
         userAxios.get('/api/recipes/user')
@@ -70,15 +34,6 @@ export default function RecipeProvider(props){
          })
     }
 
-    const handleSubmit = ( e ) => {
-        const { stepOne, stepTwo, stepThree } = stepInputs
-        e.preventDefault()
-        recipeInputs.steps.push(stepOne, stepTwo, stepThree)
-        addRecipe(recipeInputs)
-        setRecipeInputs(initInputs)
-        setStepInputs(initStepInputs)
-    }
-
     const addRecipe = ( newRecipe ) => {
         userAxios.post('/api/recipes', newRecipe)
          .then(res => {
@@ -86,6 +41,7 @@ export default function RecipeProvider(props){
                  ...prev,
                  userRecipes: [...prev.userRecipes, res.data]
              }))
+
              setRecipes(prev => ({
                 ...prev,
                 recipes: [...prev.recipes, res.data]
@@ -104,7 +60,7 @@ export default function RecipeProvider(props){
         })
     }
 
-    const editRecipe = (  updates, recipeID ) => {
+    const editRecipe = ( updates, recipeID ) => {
        userAxios.put(`/api/recipes/${ recipeID }`, updates)
         .then(res => {
             setUserRecipes(prev => ({
@@ -119,13 +75,9 @@ export default function RecipeProvider(props){
     return(
         <RecipeContext.Provider
             value={{
-                ...recipeInputs,
-                ...stepInputs,
-                handleStepChange,
                 userRecipes,
                 recipes,
-                handleChange,
-                handleSubmit,
+                addRecipe,
                 deleteRecipe,
                 editRecipe,
                 allRecipes,

@@ -17,25 +17,24 @@ import './Recipe.scss'
 export const Recipe = (props) => {
     const { user, title, description, difficulty, ingredients, totalCookTime, equipment, imgURL, servingSize, steps, type, _id } = props
 
-    const { userAxios, editRecipe } = useContext(RecipeContext)
+    const { userAxios } = useContext(RecipeContext)
 
     const [ authorName, setAuthorName ] = useState("")
     console.log(authorName)
     const [ editToggle, setEditToggle ] = useState(false)
 
-    const newInputs = {
-        title: '',
-        description: '',
-        difficulty: 0,
-        ingredients: '',
-        totalCookTime: 0,
-        equipment: '',
-        servingSize: 0,
-        steps: [],
-        imgURL: ''
-    }
+    // const newInputs = {
+    //     title: title,
+    //     description: description,
+    //     difficulty: difficulty,
+    //     ingredients: ingredients,
+    //     totalCookTime: totalCookTime,
+    //     equipment: equipment,
+    //     servingSize: servingSize,
+    //     steps: steps,
+    //     imgURL: imgURL
+    // }
 
-   
     const getRecipeAuthor = (userID) => {
         userAxios.get(`/api/recipes/user/${userID}`)
         .then(( res ) => {
@@ -49,6 +48,7 @@ export const Recipe = (props) => {
     useEffect(() => {
         getRecipeAuthor(user)
     }, [])
+
     
     return(
         <div className="display-recipe">
@@ -137,7 +137,6 @@ export const Recipe = (props) => {
 
                         <hr className="display-hr"/>
 
-
                         <li className="display-large-input-wrapper">
                             <span className="display-icon">
                                 <Icon icon={utensilsAlt} />
@@ -180,24 +179,23 @@ export const Recipe = (props) => {
             :   
                 // if( type === "personal" && editTog === true)                           
                 <>
+
+
                     <RecipeForm 
                         editToggle={editToggle}
-                    />
+                        setEditToggle={setEditToggle}
+                        _id={_id}
 
-                    <div className="button">
-                        <button
-                            className="editButton"
-                            onClick={() => editRecipe(newInputs, _id)}
-                        >
-                        Submit Edit</button>
-
-                        <button
-                            className="closeButton"
-                            onClick={() => setEditToggle(prev => !prev)}
-                        >
-                            Close 
-                        </button>
-                    </div>                      
+                        title={title}
+                        description={description}
+                        difficulty={difficulty}
+                        ingredients={ingredients}
+                        totalCookTime={totalCookTime}
+                        equipment={equipment}
+                        imgUrl={imgURL}
+                        servingSize={servingSize}
+                        steps={steps}
+                    />                    
 
                 </>
             : 
