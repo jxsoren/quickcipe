@@ -6,7 +6,7 @@ const expressJwt = require('express-jwt')
 require("dotenv").config()
 
 const path = require("path")
-const secret = process.env.SECRET || "strafe dire ego bagshot"
+const secret = process.env.SECRET || "strafe dire ego bag"
 
 
 const port = process.env.PORT || 9000;
