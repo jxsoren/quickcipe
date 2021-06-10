@@ -39,7 +39,6 @@
     ]
   },
   "proxy": "http://localhost:9000",
-  
   "devDependencies": {
     "@iconify-icons/bi": "^1.1.5",
     "@iconify-icons/carbon": "^1.1.3",
