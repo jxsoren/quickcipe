@@ -20,15 +20,15 @@ export const RecipeForm = ( props ) => {
     equipment, servingSize, steps, imgURL } = props
 
     const initInputs = {
-        title: title || '',
-        description: description || '',
-        difficulty: difficulty || 0,
-        ingredients: ingredients || '',
-        totalCookTime: totalCookTime ||  0,
-        equipment: title || '',
-        servingSize: servingSize ||  0,
-        steps: steps || [],
-        imgURL: imgURL ||  ''
+        title: '',
+        description:  0,
+        difficulty:  '',
+        ingredients:  '',
+        totalCookTime:  0,
+        equipment:  '',
+        servingSize:   0,
+        steps: [],
+        imgURL:  ''
     }
 
     const initStepInputs = {
@@ -43,19 +43,16 @@ export const RecipeForm = ( props ) => {
     const { stepOne, stepTwo, stepThree } = stepInputs 
 
     const handleSubmit = ( e ) => {
+        // e.preventDefault()
         const { stepOne, stepTwo, stepThree } = stepInputs
-        e.preventDefault()
 
         recipeInputs.steps.push(stepOne, stepTwo, stepThree)
-
-        // setRecipeInputs((prev, stepInputs) => ({
-        //     ...prev,
-        //     steps: [stepInputs]
-        // }))
-
         addRecipe(recipeInputs)
         setRecipeInputs(initInputs)
-        setStepInputs(initStepInputs)
+        // setStepInputs(initStepInputs)
+
+        console.log(initInputs)
+        console.log(recipeInputs)
     }
 
     const handleEditSubmit = e => {
@@ -170,6 +167,8 @@ export const RecipeForm = ( props ) => {
                                                     placeholder="Recipe Difficulty"
                                                     onChange={handleChange}
                                                     value={difficulty}
+                                                    min={0}
+                                                    max={10}
                                                     required
                                                     />
                                                 /10
@@ -357,6 +356,8 @@ export const RecipeForm = ( props ) => {
                                                     placeholder="Recipe Difficulty"
                                                     onChange={handleChange}
                                                     // value={difficulty}
+                                                    min={0}
+                                                    max={10}
                                                     required
                                                     />
                                                 /10

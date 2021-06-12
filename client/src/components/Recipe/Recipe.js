@@ -20,27 +20,12 @@ export const Recipe = (props) => {
     const { userAxios } = useContext(RecipeContext)
 
     const [ authorName, setAuthorName ] = useState("")
-    console.log(authorName)
     const [ editToggle, setEditToggle ] = useState(false)
-
-    // const newInputs = {
-    //     title: title,
-    //     description: description,
-    //     difficulty: difficulty,
-    //     ingredients: ingredients,
-    //     totalCookTime: totalCookTime,
-    //     equipment: equipment,
-    //     servingSize: servingSize,
-    //     steps: steps,
-    //     imgURL: imgURL
-    // }
 
     const getRecipeAuthor = (userID) => {
         userAxios.get(`/api/recipes/user/${userID}`)
         .then(( res ) => {
-             console.log(userID)
-             setAuthorName(res.data.username)
-             console.log(res.data)
+            setAuthorName(res.data.username)
          })
          .catch(err => console.log(err))
     }
@@ -179,8 +164,6 @@ export const Recipe = (props) => {
             :   
                 // if( type === "personal" && editTog === true)                           
                 <>
-
-
                     <RecipeForm 
                         editToggle={editToggle}
                         setEditToggle={setEditToggle}
@@ -196,7 +179,6 @@ export const Recipe = (props) => {
                         servingSize={servingSize}
                         steps={steps}
                     />                    
-
                 </>
             : 
                 // if( type !== "personal")
